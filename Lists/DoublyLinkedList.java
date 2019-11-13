@@ -137,7 +137,7 @@ public class DoublyLinkedList extends List {
 
 			// Übernächsten Knoten mit diesem Knoten verlinken
 			if (cursor.next != null) {
-				((DLListnode) cursor.next).pred = getCursor();
+				getAsDL(cursor.next).pred = getCursor();
 			}else {
 				last = getCursor();
 			}
@@ -202,9 +202,9 @@ public class DoublyLinkedList extends List {
 			// Der next-Knoten von dem eingefügten Knoten soll nun auf den neu
 			// eingefügten Knoten zeigen
 			if (cursor.next.next != null) {
-				((DLListnode) cursor.next.next).pred = (DLListnode) cursor.next;
+				getAsDL(cursor.next.next).pred = getAsDL(cursor.next);
 			} else {
-				last = (DLListnode) cursor.next;
+				last = getAsDL(cursor.next);
 			}
 
 		} else if (isEmpty()) {
@@ -222,9 +222,9 @@ public class DoublyLinkedList extends List {
 			// Der next-Knoten von dem eingefügten Knoten soll nun auf den neu
 			// eingefügten Knoten zeigen
 			if (cursor.next.next != null) {
-				((DLListnode) cursor.next.next).pred = (DLListnode) cursor.next;
+				getAsDL(cursor.next.next).pred = getAsDL(cursor.next);
 			} else {
-				last = (DLListnode) cursor.next;
+				last = getAsDL(cursor.next);
 			}
 		} else if (isEmpty()) {
 			first = cursor = last = newListnode(val, null, null);
