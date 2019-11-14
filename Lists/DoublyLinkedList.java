@@ -81,7 +81,7 @@ public class DoublyLinkedList extends List {
 		if (last.pred != null) {
 			last.pred.next = null;
 		}
-		
+
 		DLListnode del = last;
 		// die Referenz von last auf den Vorgänger löschen
 		del.pred = null;
@@ -90,23 +90,19 @@ public class DoublyLinkedList extends List {
 	}
 
 	public void processListnodesReverse() {
-		DLListnode current = last;
-		while (current != null) {
-			current.process();
-			current = current.pred;
+		for (DLListnode act = last; act != null; act = act.pred) {
+			act.process();
 		}
 	}
 
 	public void findReverse(Object val) {
-		DLListnode current = (DLListnode) cursor;
-		while (current != null) {
+		for (DLListnode act = (DLListnode) cursor; act != null; act = act.pred) {
 			// Falls dieser Knoten einen Val hat und dieser gleich zu dem gesuchten Wert
 			// ist, soll dieser Listknoten als aktueller Listknoten gelten
-			if (current.val != null && current.val.equals(val)) {
-				cursor = current;
+			if (act.val != null && act.val.equals(val)) {
+				cursor = act;
 				return;
 			}
-			current = current.pred;
 		}
 		// Kein Knoten gefunden oder es existiert kein aktueller Listknoten
 		cursor = null;
@@ -237,7 +233,5 @@ public class DoublyLinkedList extends List {
 		}
 
 	}
-	
-	
 
 }
