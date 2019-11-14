@@ -22,22 +22,6 @@ public class DoublyLinkedList extends List {
 		// Konstruiert eine leere doppelt verkettete Liste
 	}
 
-	// --------------------------------
-
-	private DLListnode getCursor() {
-		return getAsDL(cursor);
-	}
-
-	private DLListnode getFirst() {
-		return getAsDL(first);
-	}
-
-	private DLListnode getAsDL(Listnode node) {
-		return (DLListnode) node;
-	}
-
-	// --------------------------------
-
 	public void last() {
 		// Den Cursor auf den letzten Knoten setzen
 		this.cursor = this.last;
@@ -47,7 +31,7 @@ public class DoublyLinkedList extends List {
 		// Falls der Cursor auf nichts zeigt, wird nichts gemacht
 		if (hasActListnode()) {
 			// Den Cursor auf den Vorgänger des aktuellen Knotens zeigen lassen
-			cursor = getCursor().pred;
+			cursor = ((DLListnode) cursor).pred;
 		}
 	}
 
@@ -58,7 +42,7 @@ public class DoublyLinkedList extends List {
 			return null;
 		}
 		// Wert des Vorgängers holen
-		return getCursor().pred.val;
+		return ((DLListnode) cursor).pred.val;
 	}
 
 	public void setValPred(Object val) {
@@ -69,13 +53,13 @@ public class DoublyLinkedList extends List {
 			return;
 		}
 		// Wert des Vorgängers setzen
-		getCursor().pred.val = val;
+		((DLListnode) cursor).pred.val = val;
 	}
 
 	public boolean existActListnodePredecessor() {
 		// Liefert true, falls es einen aktuellen Knoten gibt und dieser einen Vorgänger
 		// besitzt
-		return hasActListnode() && getCursor().pred != null;
+		return hasActListnode() && ((DLListnode) cursor).pred != null;
 	}
 
 	public void deleteLast() {
@@ -89,12 +73,12 @@ public class DoublyLinkedList extends List {
 		if (cursor == last) {
 			cursor = null;
 		}
-		if(first == last) {
+		if (first == last) {
 			first = null;
 		}
 
 		// Der Vorgänger von last soll auf nichts mehr zeigen, da last gelöscht wird
-		if(last.pred != null) {
+		if (last.pred != null) {
 			last.pred.next = null;
 		}
 		// last zeigt nun auf den Vorgänger von last
@@ -110,7 +94,7 @@ public class DoublyLinkedList extends List {
 	}
 
 	public void findReverse(Object val) {
-		DLListnode current = getCursor();
+		DLListnode current = (DLListnode) cursor;
 		while (current != null) {
 			// Falls dieser Knoten einen Val hat und dieser gleich zu dem gesuchten Wert
 			// ist, soll dieser Listknoten als aktueller Listknoten gelten
@@ -137,9 +121,9 @@ public class DoublyLinkedList extends List {
 
 			// Übernächsten Knoten mit diesem Knoten verlinken
 			if (cursor.next != null) {
-				getAsDL(cursor.next).pred = getCursor();
-			}else {
-				last = getCursor();
+				((DLListnode) cursor.next).pred = (DLListnode) cursor;
+			} else {
+				last = (DLListnode) cursor;
 			}
 		} else {
 			System.out.println("delete: Es gibt keinen aktuellen Listenknoten oder ");
@@ -155,16 +139,15 @@ public class DoublyLinkedList extends List {
 			del.next = null;
 
 			if (cursor.next != null) {
-				getAsDL(cursor.next).pred = getCursor();
-				
+				((DLListnode) cursor.next).pred = (DLListnode) cursor;
+
 				if (cursor.next.next == null) {
-					last = getAsDL(cursor.next);
+					last = (DLListnode) cursor.next;
 				}
-			}else {
-				last = getCursor();
+			} else {
+				last = ((DLListnode) cursor);
 			}
-			
-			
+
 		} else {
 			System.out.println("deleteAfter: Der Nachfolger des aktuellen " + "Listenknotens existiert nicht.");
 		}
@@ -181,8 +164,8 @@ public class DoublyLinkedList extends List {
 			del.next = null;
 
 			// Dieser Knoten soll keinen Vorgäner mehr haben
-			if (getFirst() != null) {
-				getFirst().pred = null;
+			if ((DLListnode) first != null) {
+				((DLListnode) first).pred = null;
 			}
 		} else {
 			System.out.println("deleteFirst: Die Liste ist leer.");
@@ -196,15 +179,15 @@ public class DoublyLinkedList extends List {
 			 * neuen Knoten einfuegen und dabei die Info-Komponenten des aktuellen und
 			 * neuenListenknotens vertauschen
 			 */
-			cursor.next = newListnode(cursor.val, getCursor(), cursor.next);
+			cursor.next = newListnode(cursor.val, (DLListnode) cursor, cursor.next);
 			cursor.val = val;
 
 			// Der next-Knoten von dem eingefügten Knoten soll nun auf den neu
 			// eingefügten Knoten zeigen
 			if (cursor.next.next != null) {
-				getAsDL(cursor.next.next).pred = getAsDL(cursor.next);
+				((DLListnode) cursor.next.next).pred = (DLListnode) cursor.next;
 			} else {
-				last = getAsDL(cursor.next);
+				last = (DLListnode) cursor.next;
 			}
 
 		} else if (isEmpty()) {
@@ -217,14 +200,14 @@ public class DoublyLinkedList extends List {
 	@Override
 	public void insertAfter(Object val) {
 		if (hasActListnode()) {
-			cursor.next = newListnode(val, getCursor(), cursor.next);
+			cursor.next = newListnode(val, (DLListnode) cursor, cursor.next);
 
 			// Der next-Knoten von dem eingefügten Knoten soll nun auf den neu
 			// eingefügten Knoten zeigen
 			if (cursor.next.next != null) {
-				getAsDL(cursor.next.next).pred = getAsDL(cursor.next);
+				((DLListnode) cursor.next.next).pred = (DLListnode) cursor.next;
 			} else {
-				last = getAsDL(cursor.next);
+				last = (DLListnode) cursor.next;
 			}
 		} else if (isEmpty()) {
 			first = cursor = last = newListnode(val, null, null);
@@ -250,5 +233,7 @@ public class DoublyLinkedList extends List {
 		}
 
 	}
+	
+	
 
 }
