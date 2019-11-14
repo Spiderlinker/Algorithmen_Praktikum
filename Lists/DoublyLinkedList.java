@@ -81,12 +81,12 @@ public class DoublyLinkedList extends List {
 		if (last.pred != null) {
 			last.pred.next = null;
 		}
-
+		
 		DLListnode del = last;
-		// die Referenz von last auf den Vorgänger löschen
-		del.pred = null;
 		// last soll nun auf den Vorgänger von last zeigen
 		last = last.pred;
+		// die Referenz von last auf den Vorgänger löschen
+		del.pred = null;
 	}
 
 	public void processListnodesReverse() {
@@ -233,5 +233,7 @@ public class DoublyLinkedList extends List {
 		}
 
 	}
+	
+	
 
 }
