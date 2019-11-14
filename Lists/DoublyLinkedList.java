@@ -81,7 +81,11 @@ public class DoublyLinkedList extends List {
 		if (last.pred != null) {
 			last.pred.next = null;
 		}
-		// last zeigt nun auf den Vorgänger von last
+		
+		DLListnode del = last;
+		// die Referenz von last auf den Vorgänger löschen
+		del.pred = null;
+		// last soll nun auf den Vorgänger von last zeigen
 		last = last.pred;
 	}
 
